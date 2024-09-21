@@ -1,36 +1,37 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
-public abstract class Grafo<V extends Vertice, A extends Aresta> {
+import GrafoComPeso.No;
+
+public class Grafo<V extends Vertice, A extends Arestas> {
 	
 	private List<V> vertices = new ArrayList<>(); 
-	protected List<ArrayList<A>> arestas = new ArrayList<>();
+	protected ArrayList<ArrayList<A>> arestas = new ArrayList<>();
 
 	public Grafo(List<V> vertices) { // Adicionando listas em uma matriz
 		this.vertices.addAll(vertices);
-		// para cada vertice cria uma lista de adjacência
+		// para cada vértice cria-se uma lista de arestas
 		for (V vertice : vertices) {
 			arestas.add(new ArrayList<A>());
 		}
 	}
-
+	// Interliga os vertices 
     public int adicionarVertices(V vertice) {
-    	vertices.add(vertice);
-    	arestas.add(new ArrayList<A>());
+    	vertices.add(vertice);// adiciona vértice na lista de vértices
+    	arestas.add(new ArrayList<A>()); 
     	return getQtdVertices()-1;
     }
-    
-    public V buscarVertice(int index) {
-    	return vertices.get(index);
-    }
-    
-    public int buscarIndexVertice(V vertice) {
-    	return vertices.indexOf(vertice);
-    }
- // Find the vertices that a vertex at some index is connected to
+  
+
+  //Encontre os vértices aos quais um vértice em algum índice está conectado
     public List<V> vizinhosVertice(int index){
         return arestas.get(index).stream().map(
         		aresta -> buscarVertice(aresta.v)
@@ -49,6 +50,14 @@ public abstract class Grafo<V extends Vertice, A extends Aresta> {
     	return buscarArestas(buscarIndexVertice(vertice));
     }
     
+    public V buscarVertice(int index) {
+    	return vertices.get(index);
+    }
+    
+    public int buscarIndexVertice(V vertice) {
+    	return vertices.indexOf(vertice);
+    }
+	
 	public int getQtdVertices() {
 		return vertices.size();
 	}
@@ -56,16 +65,33 @@ public abstract class Grafo<V extends Vertice, A extends Aresta> {
 	public int getQtdArestas() {
 		return arestas.stream().mapToInt(ArrayList::size).sum();
 	}
+	
+	 
+	
 
 	@Override
 	public String toString() {
+		
 		StringBuilder sb = new StringBuilder();
 		
 		for(int i = 0; i < getQtdVertices(); i++) {
-			sb.append(buscarVertice(i));
+			
+			List<V> vizinhos = vizinhosVertice(i);
+					
+			
+			sb.append(buscarVertice(i).getVerticeId());
 			sb.append("->");
-			sb.append(Arrays.toString(vizinhosVertice(i).toArray()));
-			sb.append(System.lineSeparator());
+			
+			if (vizinhos.isEmpty()) {
+				sb.append("vazio");
+			}
+			
+			for (Iterator iterator = vizinhos.iterator(); iterator.hasNext();) {
+				V vizinho = (V) iterator.next();
+				sb.append(vizinho.getVerticeId() +" ");
+			}
+			sb.append(System.lineSeparator()); // pula uma linha
+
 		}
 		return sb.toString();
 	}

@@ -1,5 +1,7 @@
 import java.util.List;
 
+import BuscaGenerica.No;
+
 public class App {
 
 	public static void main(String[] args) {
@@ -10,26 +12,22 @@ public class App {
 		Vertice v4 = new Vertice(4); 
 		Vertice v5 = new Vertice(5); 
 		Vertice v6 = new Vertice(6);
+		Vertice v7 = new Vertice(7);
 		
-		
-		GrafoSemPeso<Vertice> grafo = new GrafoSemPeso<>(
-				List.of(v1, v2, v3, v4,v5,v6) );
+		GrafoComPeso<Vertice> grafo = new GrafoComPeso<Vertice>(
+				List.of(v1, v2, v3, v4,v5,v6,v7));
+		//Cria as arestas incidentes 
+		grafo.adicionarAresta(v1, v2, 0);;
+		grafo.adicionarAresta(v2, v3,2);
+		grafo.adicionarAresta(v2, v4,1);
+		grafo.adicionarAresta(v3, v5,4);
+		grafo.adicionarAresta(v6, v7,5);
 
-		grafo.adicionarAresta(v1, v2);
-		grafo.adicionarAresta(v2, v3);
-		
-		
-		/*System.out.println(grafo.toString());
+		//System.out.println(grafo.toString());
+	
+		//grafo.dfs(v6, v7);
+		 grafo.astr(v6,v7);
 
-		Node<String> bfsResult = GenericSearch.bfs("Boston",
-				v -> v.equals("Miami"),
-				cityGraph::neighborsOf);
-		if (bfsResult == null) {
-			System.out.println("No solution found using breadth-first search!");
-		} else {
-			List<String> path = GenericSearch.nodeToPath(bfsResult);
-			System.out.println("Path from Boston to Miami:");
-			System.out.println(path);
-		}*/
+	
 	}
 }
