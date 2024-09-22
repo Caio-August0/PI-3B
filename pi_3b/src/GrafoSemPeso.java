@@ -7,11 +7,11 @@ import java.util.Stack;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import BuscaGenerica.No;
+import algortimo_de_busca.BuscaGenerica.No;
 
-public class GrafoSemPeso<V extends Vertice> extends Grafo<Vertice, Arestas>{
+public class GrafoSemPeso<V extends Vertices> extends Grafo<Vertices, Arestas>{
 
-	public GrafoSemPeso(List<Vertice> vertices) {
+	public GrafoSemPeso(List<Vertices> vertices) {
 		super(vertices);
 	}
 	
@@ -29,24 +29,24 @@ public class GrafoSemPeso<V extends Vertice> extends Grafo<Vertice, Arestas>{
 	}
 	
 	
-	public Vertice dfs(Vertice raiz, Vertice verticeDeParada){
+	public Vertices dfs(Vertices raiz, Vertices verticeDeParada){
 		
-		ArrayList<Vertice> visitados = new ArrayList<>();
-		Stack<Vertice> naoVistidados = new Stack<>();
+		ArrayList<Vertices> visitados = new ArrayList<>();
+		Stack<Vertices> naoVistidados = new Stack<>();
 		
 		naoVistidados.push(raiz);
 		visitados.add(raiz);
 		// Até a pilha ficar vazia
 		while(!naoVistidados.isEmpty()) {
 			
-			Vertice noAtual = naoVistidados.pop();
+			Vertices noAtual = naoVistidados.pop();
 			
 			// Se encontrar o objetivo, terminar
 			if (verticeDeParada.equals(noAtual)) {
 				return noAtual;
 			}
 			// verificamos para onde podemos ir a seguir e ainda não exploramos
-			for (Vertice vizinho: vizinhosVertice(noAtual)) {
+			for (Vertices vizinho: vizinhosVertice(noAtual)) {
 				if (visitados.contains(vizinho)) {
 					continue;
 				}
@@ -60,8 +60,8 @@ public class GrafoSemPeso<V extends Vertice> extends Grafo<Vertice, Arestas>{
 	}
 	
 	
-	public List<Vertice> caminhoNo(Vertice objetivo){
-		List<Vertice> caminho = new ArrayList<>();
+	public List<Vertices> caminhoNo(Vertices objetivo){
+		List<Vertices> caminho = new ArrayList<>();
 		caminho.add(objetivo);
 		
 		while (objetivo.getAnterior() != null) {
@@ -71,24 +71,24 @@ public class GrafoSemPeso<V extends Vertice> extends Grafo<Vertice, Arestas>{
 		return caminho;
 	}
 
-	public Vertice astr(Vertice raiz, Vertice verticeDeParada) {
+	public Vertices astr(Vertices raiz, Vertices verticeDeParada) {
 		
-		ArrayList<Vertice> visitados = new ArrayList<>();
-		Stack<Vertice> naoVistidados = new Stack<>();
+		ArrayList<Vertices> visitados = new ArrayList<>();
+		Stack<Vertices> naoVistidados = new Stack<>();
 		
 		naoVistidados.push(raiz);
 		visitados.add(raiz);
 		// Até a pilha ficar vazia
 		while(!naoVistidados.isEmpty()) {
 			
-			Vertice noAtual = naoVistidados.pop();
+			Vertices noAtual = naoVistidados.pop();
 			
 			// Se encontrar o objetivo, terminar
 			if (verticeDeParada.equals(noAtual)) {
 				return noAtual;
 			}
 			// verificamos para onde podemos ir a seguir e ainda não exploramos
-			for (Vertice vizinho: vizinhosVertice(noAtual)) {
+			for (Vertices vizinho: vizinhosVertice(noAtual)) {
 				
 				if (visitados.contains(vizinho)) {
 					continue;

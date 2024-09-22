@@ -1,20 +1,13 @@
-import java.lang.Runtime.Version;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Stack;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.ToDoubleFunction;
 
-import BuscaGenerica.No;
+public class GrafoComPeso<V extends Vertices> extends Grafo<Vertices, Arestas>{
 
-public class GrafoComPeso<V extends Vertice> extends Grafo<Vertice, Arestas>{
-
-	public GrafoComPeso(List<Vertice> vertices) {
+	public GrafoComPeso(List<Vertices> vertices) {
 		super(vertices);
 	}
 	
@@ -33,9 +26,9 @@ public class GrafoComPeso<V extends Vertice> extends Grafo<Vertice, Arestas>{
 		));
 	}
 			
-	 public List<Vertice> caminhoNo(Vertice objetivo){
+	 public List<Vertices> caminhoNo(Vertices objetivo){
 		 
-			List<Vertice> caminho = new ArrayList<>();
+			List<Vertices> caminho = new ArrayList<>();
 			caminho.add(objetivo);
 			
 			while (objetivo.getAnterior() != null) {
@@ -46,7 +39,7 @@ public class GrafoComPeso<V extends Vertice> extends Grafo<Vertice, Arestas>{
 	}
 
 	 
-	 public double heuristica(Vertice atual, Vertice destino) { // distancia heuclidiana
+	 public double heuristica(Vertices atual, Vertices destino) { // distancia heuclidiana
 		 
 		 List<Arestas> arestasAtual =  buscarArestas(atual);
 		 List<Arestas> arestasDestino = buscarArestas(atual); 
@@ -62,24 +55,24 @@ public class GrafoComPeso<V extends Vertice> extends Grafo<Vertice, Arestas>{
 	 
 	 
 	
-	public Vertice dfs(Vertice raiz, Vertice verticeDeParada){
+	public Vertices dfs(Vertices raiz, Vertices verticeDeParada){
 		
-		ArrayList<Vertice> visitados = new ArrayList<>();
-		Stack<Vertice> naoVistidados = new Stack<>();
+		ArrayList<Vertices> visitados = new ArrayList<>();
+		Stack<Vertices> naoVistidados = new Stack<>();
 		
 		naoVistidados.push(raiz);
 		visitados.add(raiz);
 		// Até a pilha ficar vazia
 		while(!naoVistidados.isEmpty()) {
 			
-			Vertice noAtual = naoVistidados.pop();
+			Vertices noAtual = naoVistidados.pop();
 			
 			// Se encontrar o objetivo, terminar
 			if (verticeDeParada.equals(noAtual)) {
 				return noAtual;
 			}
 			// verificamos para onde podemos ir a seguir e ainda não exploramos
-			for (Vertice vizinho: vizinhosVertice(noAtual)) {
+			for (Vertices vizinho: vizinhosVertice(noAtual)) {
 				if (visitados.contains(vizinho)) {
 					continue;
 				}
@@ -122,7 +115,7 @@ public class GrafoComPeso<V extends Vertice> extends Grafo<Vertice, Arestas>{
 		
 	}
 	
-	public void astr(Vertice inicio, Vertice verticeDeParada){
+	public void astr(Vertices inicio, Vertices verticeDeParada){
 		
 		PriorityQueue<No<V>> naoVisitados = new PriorityQueue<>();
 		double h = heuristica(inicio, verticeDeParada);
@@ -144,7 +137,7 @@ public class GrafoComPeso<V extends Vertice> extends Grafo<Vertice, Arestas>{
 			}
 			
 			// Pra onde pode ir
-			for (Vertice vizinho: vizinhosVertice(noAtual.estado)) {
+			for (Vertices vizinho: vizinhosVertice(noAtual.estado)) {
 				double novoCusto = noAtual.custo + 1;
 
 				if (!visitados.containsKey(vizinho)) {
@@ -169,7 +162,7 @@ public class GrafoComPeso<V extends Vertice> extends Grafo<Vertice, Arestas>{
 			System.out.printf("O caminho de %d para %d é:\n", caminho.getFirst().getVerticeId(), caminho.getLast().getVerticeId());
 			
 			StringBuilder sb = new StringBuilder();
-			for (Vertice c : caminho) {
+			for (Vertices c : caminho) {
 				sb.append(c.getVerticeId());
 				if (!c.equals(caminho.getLast())) {
 					sb.append("->");

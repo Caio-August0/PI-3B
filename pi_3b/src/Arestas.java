@@ -1,27 +1,31 @@
 
 public class Arestas {
 
-	public final int u;
-	public final int v;
-	public final double peso;
-	public final Vertice origem;
-	public final Vertice destino;
-		
-	public Arestas(Vertice origem, Vertice destino, int u, int v, double peso) {
-		this.origem = origem;
-		this.destino = destino;
-		this.u = u; // de 
-		this.v = v; // para
-		this.peso = peso;
-	}
+	private final double peso;
+	//private final Vertices origem;
+	private final Vertices destino;
 	
-	public Arestas arestaInvertida() {
-		return new Arestas(destino, origem,v,u,peso);
+	public double getPeso() {
+		return peso;
 	}
 
-	@Override
-	public String toString() {
-		return  u + "->" + v;
-	}	
+
+	public Vertices getDestino() {
+		return destino;
+	}
+
+
+	public Arestas(Vertices destino, double peso) {
+		this.destino = destino;
+		this.peso = peso;
+	}
+
+	
+	public Arestas arestaInvertida() {
+		return new Arestas(destino,peso);
+	}
+	
+	
+	
 	
 }
